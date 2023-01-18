@@ -1,14 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import Battle from '../../models/Battle';
 import BattleRepo from '../../repositories/BattleRepo';
+import CharacterRepo from '../../repositories/CharacterRepo';
 import dotenv from 'dotenv';
+import Character from '../../models/Character';
 dotenv.config(); // load .env file
 
 class BattleController {
 
     private repo;
+    private characterRepo;
     constructor(){
         this.repo = new BattleRepo();
+        this.characterRepo = new CharacterRepo();
     }
 
     index = async (req: Request, res: Response, next: NextFunction) => {
@@ -57,8 +61,34 @@ class BattleController {
     };
 
     generateBattle = async (req: Request, res: Response, next: NextFunction) => {
-        const data = await this.repo.generateBattle();
+        const { characterOneId, characterTwoId } = req.body;
+        const playerOne = await this.characterRepo.getCharacterById(characterOneId);
+        const playerTwo = await this.characterRepo.getCharacterById(characterTwoId);
+        // Get RNG to Pick winner
+        const randomNum = Math.round(Math.random() * 1);
+        const winner = randomNum === 1 ? "Fighter Two" : "Fighter One";
+        // Generate Battle Stage
+        const stage = await this.repo.generateBattleStage();
+        // Confirm if Both players Exists
+        if (!playerOne || !playerTwo) {
+            return res.status(422).json({
+                status: false,
+                message:"players not specified"
+            });
+        }
+        // Get Winner
+        const winnerModel = randomNum === 1 ? playerTwo : playerOne;
+        // Get Loser
+        const loserModel = randomNum !== 1 ? playerTwo : playerOne;
+        // Get Story By Generating Battle
+        const story = await this.repo.generateBattle(playerOne.bio, playerTwo.bio, winner, stage);
+        // Save Battle Record;
+        const data = await this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, story);
+        // Update Characters win and Loss
+        await this.characterRepo.updateCharacterLoss(loserModel._id);
+        await this.characterRepo.updateCharacterWin(winnerModel._id);
         return res.status(200).json({
+            status: true,
             data
         });
     };

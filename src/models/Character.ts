@@ -17,6 +17,14 @@ const CharacterSchema: Schema = new Schema(
         bio: {
             type: String
         },
+        wins: {
+            type: Number,
+            default:0
+        },
+        loss: {
+            type:Number,
+            default:0
+        },
         ownerId: {
             type: Schema.Types.ObjectId,
             ref: 'User'

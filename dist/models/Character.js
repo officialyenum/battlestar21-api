@@ -36,6 +36,14 @@ const CharacterSchema = new mongoose_1.Schema({
     bio: {
         type: String
     },
+    wins: {
+        type: Number,
+        default: 0
+    },
+    loss: {
+        type: Number,
+        default: 0
+    },
     ownerId: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'User'

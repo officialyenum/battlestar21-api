@@ -86,7 +86,7 @@ class CharacterController {
     }
 
     generateName = async (req: Request, res: Response, next: NextFunction) => {
-        const data = await this.repo.generateTwoCharacters();
+        const data = await this.repo.generateCharacter();
         return res.status(200).json({
             data
         });

@@ -8,6 +8,7 @@ const controller = new BattleController();
 
 // Character routes
 router.get('/', controller.index);
+router.get('/simulate', controller.generateBattle);
 router.get('/:id', controller.show);
 router.delete('/:id', controller.delete);
 

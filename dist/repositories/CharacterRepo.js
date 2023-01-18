@@ -142,6 +142,22 @@ class CharacterRepo {
             };
         });
     }
+    getCharacterById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const char = yield Character_1.default.findById(id);
+            return char;
+        });
+    }
+    updateCharacterLoss(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Character_1.default.findByIdAndUpdate(id, { loss: { $inc: 1 } });
+        });
+    }
+    updateCharacterWin(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Character_1.default.findByIdAndUpdate(id, { wins: { $inc: 1 } });
+        });
+    }
 }
 exports.default = CharacterRepo;
 //# sourceMappingURL=CharacterRepo.js.map

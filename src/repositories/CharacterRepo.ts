@@ -1,4 +1,4 @@
-import Character, { ICharacter } from "../models/Character";
+import Character, { ICharacter, ICharacterModel } from "../models/Character";
 import mongoose from 'mongoose';
 import axios from "axios";
 import dotenv from 'dotenv';
@@ -126,6 +126,19 @@ class CharacterRepo {
             player:charOne,
             computer:charTwo
         }
+    }
+
+    async getCharacterById(id:string){
+        const char =await Character.findById(id)
+        return char;
+    }
+
+    async updateCharacterLoss(id:string){
+        await Character.findByIdAndUpdate(id, { loss: { $inc: 1 } });
+    }
+
+    async updateCharacterWin(id:string){
+        await Character.findByIdAndUpdate(id, { wins: { $inc: 1 } });
     }
 }
 

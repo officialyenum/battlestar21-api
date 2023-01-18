@@ -87,7 +87,7 @@ class CharacterController {
             });
         });
         this.generateName = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const data = yield this.repo.generateTwoCharacters();
+            const data = yield this.repo.generateCharacter();
             return res.status(200).json({
                 data
             });

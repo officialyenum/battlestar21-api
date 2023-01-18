@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Battle_1 = __importDefault(require("../../models/Battle"));
 const BattleRepo_1 = __importDefault(require("../../repositories/BattleRepo"));
+const CharacterRepo_1 = __importDefault(require("../../repositories/CharacterRepo"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config(); // load .env file
 class BattleController {
@@ -59,12 +60,39 @@ class BattleController {
                 .catch((err) => res.status(500).json({ err }));
         };
         this.generateBattle = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            const data = yield this.repo.generateBattle();
+            const { characterOneId, characterTwoId } = req.body;
+            const playerOne = yield this.characterRepo.getCharacterById(characterOneId);
+            const playerTwo = yield this.characterRepo.getCharacterById(characterTwoId);
+            // Get RNG to Pick winner
+            const randomNum = Math.round(Math.random() * 1);
+            const winner = randomNum === 1 ? "Fighter Two" : "Fighter One";
+            // Generate Battle Stage
+            const stage = yield this.repo.generateBattleStage();
+            // Confirm if Both players Exists
+            if (!playerOne || !playerTwo) {
+                return res.status(422).json({
+                    status: false,
+                    message: "players not specified"
+                });
+            }
+            // Get Winner
+            const winnerModel = randomNum === 1 ? playerTwo : playerOne;
+            // Get Loser
+            const loserModel = randomNum !== 1 ? playerTwo : playerOne;
+            // Get Story By Generating Battle
+            const story = yield this.repo.generateBattle(playerOne.bio, playerTwo.bio, winner, stage);
+            // Save Battle Record;
+            const data = yield this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, story);
+            // Update Characters win and Loss
+            yield this.characterRepo.updateCharacterLoss(loserModel._id);
+            yield this.characterRepo.updateCharacterWin(winnerModel._id);
             return res.status(200).json({
+                status: true,
                 data
             });
         });
         this.repo = new BattleRepo_1.default();
+        this.characterRepo = new CharacterRepo_1.default();
     }
 }
 exports.default = BattleController;
