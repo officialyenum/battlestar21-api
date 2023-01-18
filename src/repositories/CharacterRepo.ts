@@ -109,6 +109,16 @@ class CharacterRepo {
         return savedCharacter;
     }
 
+    async getRandomCharacter(random:number) {
+        const randomUser = await Character.findOne().skip(random).exec();
+        return randomUser;
+    }
+
+    async getCharacterCount() {
+        const count = await Character.find({}).count();
+        return count;
+    }
+
     async generateTwoCharacters() {
         const charOne = await this.generateCharacter();
         const charTwo = await this.generateCharacter();

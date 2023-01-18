@@ -12,12 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Battle_1 = __importDefault(require("../models/Battle"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config(); // load .env file
 class BattleRepo {
     generateBattle() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(process.env.AI_TOKEN);
+        });
+    }
+    getBattleCount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const count = yield Battle_1.default.find({}).count();
+            return count;
         });
     }
 }

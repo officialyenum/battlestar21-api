@@ -19,11 +19,30 @@ dotenv_1.default.config(); // load .env file
 class BattleController {
     constructor() {
         this.index = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            let totalItems;
+            const { page, count } = req.query;
+            const query = {
+                page: page || 1,
+                count: count || 10
+            };
+            totalItems = yield this.repo.getBattleCount();
+            const queryPage = +query.page;
+            const queryCount = +query.count;
             return Battle_1.default.find()
-                .select('-__v')
-                .populate('author', '-__v -password')
-                .exec()
-                .then((battles) => res.status(200).json({ data: battles }))
+                .skip((queryPage - 1) * queryCount)
+                .limit(queryCount)
+                .lean()
+                .then((battles) => {
+                res.status(200).json({
+                    data: battles,
+                    currentPage: queryPage,
+                    hasNextPage: queryCount * queryPage < totalItems,
+                    hasPreviousPage: queryPage > 1,
+                    nextPage: queryPage + 1,
+                    previousPage: queryPage - 1,
+                    lastPage: Math.ceil(totalItems / queryCount)
+                });
+            })
                 .catch((err) => res.status(500).json({ err }));
         });
         this.show = (req, res, next) => {

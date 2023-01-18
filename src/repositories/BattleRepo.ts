@@ -1,4 +1,4 @@
-import Character, { ICharacter } from "../models/Character";
+import Battle, { IBattle } from "../models/Battle";
 import mongoose from 'mongoose';
 import axios from "axios";
 import dotenv from 'dotenv';
@@ -9,6 +9,11 @@ class BattleRepo {
 
     async generateBattle() {
         console.log(process.env.AI_TOKEN);
+    }
+
+    async getBattleCount() {
+        const count = await Battle.find({}).count();
+        return count;
     }
 }
 

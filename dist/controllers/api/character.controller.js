@@ -75,6 +75,17 @@ class CharacterController {
                 .then((character) => (character ? res.status(201).json({ message: 'deleted' }) : res.status(404).json({ message: 'Character not found' })))
                 .catch((err) => res.status(500).json({ err }));
         };
+        this.getRandom = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { character_id } = req.params;
+            console.log(character_id);
+            // Get the count of all users
+            const characterCount = yield this.repo.getCharacterCount();
+            const random = Math.floor(Math.random() * characterCount);
+            const randomUser = yield this.repo.getRandomCharacter(random);
+            return res.status(200).json({
+                data: randomUser
+            });
+        });
         this.generateName = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const data = yield this.repo.generateTwoCharacters();
             return res.status(200).json({

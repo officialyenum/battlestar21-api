@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import Battle from '../../models/Battle';
 import BattleRepo from '../../repositories/BattleRepo';
 import dotenv from 'dotenv';
+import Character from '../../models/Character';
 dotenv.config(); // load .env file
 
 class BattleController {
@@ -13,11 +14,31 @@ class BattleController {
     }
 
     index = async (req: Request, res: Response, next: NextFunction) => {
+        let totalItems:number;
+        const { page, count } = req.query;
+        const query:any ={
+            page : page || 1,
+            count: count || 10
+        };
+
+        totalItems = await this.repo.getBattleCount();
+        const queryPage: number = +query.page;
+        const queryCount: number = +query.count;
+
         return Battle.find()
-            .select('-__v')
-            .populate('author', '-__v -password')
-            .exec()
-            .then((battles) => res.status(200).json({ data: battles }))
+            .skip((queryPage - 1)* queryCount)
+            .limit(queryCount)
+            .lean()
+            .then((battles) => {
+                res.status(200).json({
+                    data: battles,
+                    currentPage: queryPage,
+                    hasNextPage: queryCount * queryPage < totalItems,
+                    hasPreviousPage: queryPage > 1,
+                    nextPage: queryPage + 1,
+                    previousPage: queryPage - 1,
+                    lastPage: Math.ceil(totalItems/ queryCount) })
+            })
             .catch((err) => res.status(500).json({ err }));
     };
 

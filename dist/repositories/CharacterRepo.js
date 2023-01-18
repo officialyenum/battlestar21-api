@@ -120,6 +120,18 @@ class CharacterRepo {
             return savedCharacter;
         });
     }
+    getRandomCharacter(random) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const randomUser = yield Character_1.default.findOne().skip(random).exec();
+            return randomUser;
+        });
+    }
+    getCharacterCount() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const count = yield Character_1.default.find({}).count();
+            return count;
+        });
+    }
     generateTwoCharacters() {
         return __awaiter(this, void 0, void 0, function* () {
             const charOne = yield this.generateCharacter();

@@ -73,6 +73,18 @@ class CharacterController {
             .catch((err) => res.status(500).json({ err }));
     };
 
+    getRandom = async (req: Request, res: Response, next: NextFunction) => {
+        const { character_id } = req.params;
+        console.log(character_id);
+        // Get the count of all users
+        const characterCount = await this.repo.getCharacterCount();
+        const random = Math.floor(Math.random() * characterCount);
+        const randomUser = await this.repo.getRandomCharacter(random);
+        return res.status(200).json({
+            data: randomUser
+        });
+    }
+
     generateName = async (req: Request, res: Response, next: NextFunction) => {
         const data = await this.repo.generateTwoCharacters();
         return res.status(200).json({
