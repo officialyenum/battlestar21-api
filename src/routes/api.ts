@@ -5,6 +5,7 @@ import IndexController from '../controllers/api/index.controller';
 import authRoutes from './auth.route';
 import userRoutes from './user.route';
 import characterRoutes from './character.route';
+import battleRoutes from './battle.route';
 
 const router = Router();
 
@@ -20,5 +21,7 @@ router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 // Character routes
 router.use('/characters', characterRoutes);
+// Battle routes
+router.use('/battles', battleRoutes);
 
 export default router;

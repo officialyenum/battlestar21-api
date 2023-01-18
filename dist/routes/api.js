@@ -8,6 +8,7 @@ const index_controller_1 = __importDefault(require("../controllers/api/index.con
 const auth_route_1 = __importDefault(require("./auth.route"));
 const user_route_1 = __importDefault(require("./user.route"));
 const character_route_1 = __importDefault(require("./character.route"));
+const battle_route_1 = __importDefault(require("./battle.route"));
 const router = (0, express_1.Router)();
 /** Set up your api routes here */
 // Health check
@@ -19,5 +20,7 @@ router.use('/auth', auth_route_1.default);
 router.use('/users', user_route_1.default);
 // Character routes
 router.use('/characters', character_route_1.default);
+// Battle routes
+router.use('/battles', battle_route_1.default);
 exports.default = router;
 //# sourceMappingURL=api.js.map
