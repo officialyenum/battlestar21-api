@@ -18,7 +18,7 @@ router.get('/ping', IndexController.health);
 router.use('/auth', authRoutes);
 // User routes
 router.use('/users', userRoutes);
-// Post routes
+// Character routes
 router.use('/characters', characterRoutes);
 
 export default router;

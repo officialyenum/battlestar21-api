@@ -3,14 +3,16 @@ import { ValidateSchema, Schemas } from '../middleware/ValidateSchema';
 import CharacterController from '../controllers/api/character.controller';
 
 const router = Router();
+const controller = new CharacterController();
 
-/** Set up your api routes here */
 
-// Post routes
-router.get('/', CharacterController.index);
-router.post('/', ValidateSchema(Schemas.character.create), CharacterController.create);
-router.patch('/:id', ValidateSchema(Schemas.character.update), CharacterController.update);
-router.get('/:id', CharacterController.show);
-router.delete('/:id', CharacterController.delete);
+
+// Character routes
+router.get('/', controller.index);
+router.post('/', ValidateSchema(Schemas.character.create), controller.create);
+router.get('/generate/name', controller.generateName);
+router.patch('/:id', ValidateSchema(Schemas.character.update), controller.update);
+router.get('/:id', controller.show);
+router.delete('/:id', controller.delete);
 
 export default router;

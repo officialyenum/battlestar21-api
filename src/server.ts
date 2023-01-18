@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import { config } from './config/config';
 import * as routes from './routes';
 import Logging from './library/Logging';
-
 dotenv.config(); // load .env file
 
 const app = express();

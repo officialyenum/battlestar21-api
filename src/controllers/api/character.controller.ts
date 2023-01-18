@@ -1,18 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import Character from '../../models/Character';
+import CharacterRepo from '../../repositories/CharacterRepo';
+import dotenv from 'dotenv';
+dotenv.config(); // load .env file
 
 class CharacterController {
-    public static index = async (req: Request, res: Response, next: NextFunction) => {
+
+    private repo;
+    constructor(){
+        this.repo = new CharacterRepo();
+    }
+
+    index = async (req: Request, res: Response, next: NextFunction) => {
         return Character.find()
-            .select('-__v')
-            .populate('author', '-__v -password')
-            .exec()
             .then((characters) => res.status(200).json({ data: characters }))
             .catch((err) => res.status(500).json({ err }));
     };
 
-    public static create = (req: Request, res: Response, next: NextFunction) => {
+    create = (req: Request, res: Response, next: NextFunction) => {
         const character = new Character({
             _id: new mongoose.Types.ObjectId(),
             title: req.body.title,
@@ -24,7 +30,7 @@ class CharacterController {
             .catch((err) => res.status(500).json({ err }));
     };
 
-    public static show = (req: Request, res: Response, next: NextFunction) => {
+    show = (req: Request, res: Response, next: NextFunction) => {
         const characterId = req.params.id;
         return Character.findById(characterId)
             .select('-__v')
@@ -34,7 +40,7 @@ class CharacterController {
             .catch((err) => res.status(500).json({ err }));
     };
 
-    public static update = (req: Request, res: Response, next: NextFunction) => {
+    update = (req: Request, res: Response, next: NextFunction) => {
         const characterId = req.params.id;
         return Character.findById(characterId)
             .then((updatedCharacter) => {
@@ -51,12 +57,20 @@ class CharacterController {
             .catch((err) => res.status(500).json({ err }));
     };
 
-    public static delete = (req: Request, res: Response, next: NextFunction) => {
+    delete = (req: Request, res: Response, next: NextFunction) => {
         const characterId = req.params.id;
         return Character.findByIdAndDelete(characterId)
             .then((character) => (character ? res.status(201).json({ message: 'deleted' }) : res.status(404).json({ message: 'Character not found' })))
             .catch((err) => res.status(500).json({ err }));
     };
+
+    generateName = async (req: Request, res: Response, next: NextFunction) => {
+        const data = await this.repo.generateTwoCharacters();
+        return res.status(200).json({
+            data
+        });
+    };
+
 }
 
 export default CharacterController;

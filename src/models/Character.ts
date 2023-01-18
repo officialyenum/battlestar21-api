@@ -2,9 +2,6 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface ICharacter {
     name: string;
     bio: string;
-    primaryAttack: string;
-    secondaryAttack: string;
-    type: string;
     owner_id: Schema.Types.ObjectId;
 }
 
@@ -19,21 +16,8 @@ const CharacterSchema: Schema = new Schema(
         bio: {
             type: String
         },
-        primaryAttack: {
-            type: String,
-            required: true
-        },
-        secondaryAttack: {
-            type: String,
-            required: true
-        },
-        type: {
-            type: String,
-            required: true
-        },
-        owner_id: {
+        ownerId: {
             type: Schema.Types.ObjectId,
-            required: true,
             ref: 'User'
         }
     },
