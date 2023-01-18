@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
 import Battle from '../../models/Battle';
 import BattleRepo from '../../repositories/BattleRepo';
 import dotenv from 'dotenv';
-import Character from '../../models/Character';
 dotenv.config(); // load .env file
 
 class BattleController {

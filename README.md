@@ -44,7 +44,7 @@ This is the basic flow of the application.
 
 
 ### Documentation
--   Please click [here](https://documenter.getpostman.com/view/8719009/2s8ZDVb44E) to access the Postman Collection
+-   Please click [here](https://documenter.getpostman.com/view/8719009/2s8ZDVb48d) to access the Postman Collection
 
 ### Deployment
 
