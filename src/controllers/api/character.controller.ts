@@ -21,7 +21,7 @@ class CharacterController {
         };
 
         totalItems = await Character.find({}).count();
-        const queryPage: number = query.page;
+        const queryPage: number = +query.page;
         const queryCount: number = query.count;
 
         return Character.find()

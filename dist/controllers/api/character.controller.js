@@ -26,7 +26,7 @@ class CharacterController {
                 count: count || 10
             };
             totalItems = yield Character_1.default.find({}).count();
-            const queryPage = query.page;
+            const queryPage = +query.page;
             const queryCount = query.count;
             return Character_1.default.find()
                 .skip((queryPage - 1) * queryCount)
