@@ -4,17 +4,15 @@
     "description": "A node js template implementing how to use node typescript and ejs",
     "main": "dist/server.js",
     "scripts": {
-        "start": "nodemon src/server.ts",
-        "build": "rimraf dist && tsc",
-        "ts.check": "tsc --project tsconfig.json",
-        "add-build": "git add dist",
+        "clean": "rimraf dist/*",
+        "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+        "tsc": "tsc",
+        "start": "node dist/server.js",
+        "build": "npm-run-all clean lint tsc",
+        "dev:start": "npm-run-all build start",
+        "dev": "nodemon --watch src -e ts --exec npm run dev:start",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "pre-commit": [
-        "ts.check",
-        "build",
-        "add-build"
-    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/officialyenum/node-typescript-ejs-starter-template.git"
