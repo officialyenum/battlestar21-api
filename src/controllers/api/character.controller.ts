@@ -22,7 +22,7 @@ class CharacterController {
 
         totalItems = await Character.find({}).count();
         const queryPage: number = +query.page;
-        const queryCount: number = query.count;
+        const queryCount: number = +query.count;
 
         return Character.find()
             .skip((queryPage - 1)* queryCount)
