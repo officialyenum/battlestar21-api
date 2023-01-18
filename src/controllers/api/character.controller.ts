@@ -18,24 +18,10 @@ class CharacterController {
             .catch((err) => res.status(500).json({ err }));
     };
 
-    create = (req: Request, res: Response, next: NextFunction) => {
-        const character = new Character({
-            _id: new mongoose.Types.ObjectId(),
-            title: req.body.title,
-            author: req.body.author
-        });
-        return character
-            .save()
-            .then((newCharacter) => res.status(201).json({ data: newCharacter }))
-            .catch((err) => res.status(500).json({ err }));
-    };
-
     show = (req: Request, res: Response, next: NextFunction) => {
         const characterId = req.params.id;
         return Character.findById(characterId)
             .select('-__v')
-            .populate('author', '-__v -password')
-            .exec()
             .then((post) => (post ? res.status(200).json({ post }) : res.status(404).json({ message: 'Post not found' })))
             .catch((err) => res.status(500).json({ err }));
     };

@@ -9,7 +9,6 @@ const controller = new CharacterController();
 
 // Character routes
 router.get('/', controller.index);
-router.post('/', ValidateSchema(Schemas.character.create), controller.create);
 router.get('/generate/name', controller.generateName);
 router.patch('/:id', ValidateSchema(Schemas.character.update), controller.update);
 router.get('/:id', controller.show);
