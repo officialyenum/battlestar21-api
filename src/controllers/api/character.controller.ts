@@ -13,8 +13,31 @@ class CharacterController {
     }
 
     index = async (req: Request, res: Response, next: NextFunction) => {
+        let totalItems:number;
+        const { page, count } = req.query;
+        const query:any ={
+            page : page || 1,
+            count: count || 10
+        };
+
+        totalItems = await Character.find({}).count();
+        const queryPage: number = query.page;
+        const queryCount: number = query.count;
+
         return Character.find()
-            .then((characters) => res.status(200).json({ data: characters }))
+            .skip((queryPage - 1)* queryCount)
+            .limit(queryCount)
+            .lean()
+            .then((characters) => {
+                res.status(200).json({
+                    data: characters,
+                    currentPage: queryPage,
+                    hasNextPage: queryCount * queryPage < totalItems,
+                    hasPreviousPage: queryPage > 1,
+                    nextPage: queryPage + 1,
+                    previousPage: queryPage - 1,
+                    lastPage: Math.ceil(totalItems/ queryCount) })
+            })
             .catch((err) => res.status(500).json({ err }));
     };
 

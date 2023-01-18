@@ -19,8 +19,30 @@ dotenv_1.default.config(); // load .env file
 class CharacterController {
     constructor() {
         this.index = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            let totalItems;
+            const { page, count } = req.query;
+            const query = {
+                page: page || 1,
+                count: count || 10
+            };
+            totalItems = yield Character_1.default.find({}).count();
+            const queryPage = query.page;
+            const queryCount = query.count;
             return Character_1.default.find()
-                .then((characters) => res.status(200).json({ data: characters }))
+                .skip((queryPage - 1) * queryCount)
+                .limit(queryCount)
+                .lean()
+                .then((characters) => {
+                res.status(200).json({
+                    data: characters,
+                    currentPage: queryPage,
+                    hasNextPage: queryCount * queryPage < totalItems,
+                    hasPreviousPage: queryPage > 1,
+                    nextPage: queryPage + 1,
+                    previousPage: queryPage - 1,
+                    lastPage: Math.ceil(totalItems / queryCount)
+                });
+            })
                 .catch((err) => res.status(500).json({ err }));
         });
         this.show = (req, res, next) => {
