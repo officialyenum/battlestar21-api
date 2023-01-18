@@ -1,4 +1,5 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, PaginateModel } from 'mongoose';
+import paginate from 'mongoose-paginate-v2';
 export interface ICharacter {
     name: string;
     bio: string;
@@ -26,4 +27,8 @@ const CharacterSchema: Schema = new Schema(
     }
 );
 
+// paginate with this plugin
+CharacterSchema.plugin(paginate);
+
+// create the paginated model
 export default mongoose.model<ICharacterModel>('Character', CharacterSchema);
