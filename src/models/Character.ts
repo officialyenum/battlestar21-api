@@ -1,8 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
-
 export interface ICharacter {
-    title: string;
-    author: string;
+    name: string;
+    bio: string;
+    primaryAttack: string;
+    secondaryAttack: string;
+    type: string;
+    owner_id: Schema.Types.ObjectId;
 }
 
 export interface ICharacterModel extends Document, ICharacter {}
@@ -25,7 +28,7 @@ const CharacterSchema: Schema = new Schema(
             required: true
         },
         type: {
-            type: Enumerator,
+            type: String,
             required: true
         },
         owner_id: {

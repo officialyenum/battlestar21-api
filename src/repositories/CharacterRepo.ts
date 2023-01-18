@@ -1,25 +1,17 @@
-import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
-import Character from '../models/Character';
+import Character, { ICharacter } from "../models/Character";
+
 
 class CharacterRepo {
-    public character = new Character();
-    
-    generateName() {
-        
+
+    private _character;
+    constructor(character:ICharacter) {
+        this._character =  character
     }
 
-    generatePrimaryAttack($name: String) {
-        
-    }
-
-    generateSecondaryAttack($name: String) {
-        
-    }
-
-    generateBio($name: String) {
-        
+    generateCharacterName() {
+        return this._character.name;
     }
 }
+
 
 export default CharacterRepo;

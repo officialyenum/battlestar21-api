@@ -4,7 +4,7 @@ import IndexController from '../controllers/api/index.controller';
 
 import authRoutes from './auth.route';
 import userRoutes from './user.route';
-import postRoutes from './character.route';
+import characterRoutes from './character.route';
 
 const router = Router();
 
@@ -19,6 +19,6 @@ router.use('/auth', authRoutes);
 // User routes
 router.use('/users', userRoutes);
 // Post routes
-router.use('/posts', postRoutes);
+router.use('/characters', characterRoutes);
 
 export default router;
