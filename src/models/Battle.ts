@@ -5,6 +5,7 @@ export interface IBattle {
     character_one: Schema.Types.ObjectId;
     character_two: Schema.Types.ObjectId;
     owner_id: Schema.Types.ObjectId;
+    stage:string
     story:string
 }
 
@@ -23,6 +24,10 @@ const BattleSchema: Schema = new Schema(
         winner: {
             type: Schema.Types.ObjectId,
             ref: 'Character'
+        },
+        stage: {
+            type: String,
+            required: true
         },
         story: {
             type: String,

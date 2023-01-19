@@ -88,7 +88,7 @@ class BattleController {
         // Get Story By Generating Battle
         const story = await this.repo.generateBattle(playerOne.bio, playerTwo.bio, winner, stage);
         // Save Battle Record;
-        const data = await this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, story);
+        const data = await this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, stage, story);
         // Update Characters win and Loss
         await this.characterRepo.updateCharacterLoss(loserModel._id);
         await this.characterRepo.updateCharacterWin(winnerModel._id);

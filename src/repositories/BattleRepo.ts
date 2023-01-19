@@ -52,12 +52,13 @@ class BattleRepo {
         return res.data.completions[0].data.text;
     }
 
-    async saveBattle(charOneId:string, charTwoId:string, winnerId:string, story:string) {
+    async saveBattle(charOneId:string, charTwoId:string, winnerId:string, stage:string, story:string) {
         const battle = new Battle({
             _id: new mongoose.Types.ObjectId(),
             characterOne: charOneId,
             characterTwo: charTwoId,
             winner: winnerId,
+            stage: stage.trim(),
             story:  story.trim(),
         });
         const savedBattle = await battle.save();

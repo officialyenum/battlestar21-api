@@ -37,6 +37,10 @@ const BattleSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Character'
     },
+    stage: {
+        type: String,
+        required: true
+    },
     story: {
         type: String,
         required: true

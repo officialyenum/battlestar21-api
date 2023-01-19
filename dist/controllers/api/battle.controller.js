@@ -87,7 +87,7 @@ class BattleController {
             // Get Story By Generating Battle
             const story = yield this.repo.generateBattle(playerOne.bio, playerTwo.bio, winner, stage);
             // Save Battle Record;
-            const data = yield this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, story);
+            const data = yield this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, stage, story);
             // Update Characters win and Loss
             yield this.characterRepo.updateCharacterLoss(loserModel._id);
             yield this.characterRepo.updateCharacterWin(winnerModel._id);

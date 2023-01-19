@@ -63,13 +63,14 @@ class BattleRepo {
             return res.data.completions[0].data.text;
         });
     }
-    saveBattle(charOneId, charTwoId, winnerId, story) {
+    saveBattle(charOneId, charTwoId, winnerId, stage, story) {
         return __awaiter(this, void 0, void 0, function* () {
             const battle = new Battle_1.default({
                 _id: new mongoose_1.default.Types.ObjectId(),
                 characterOne: charOneId,
                 characterTwo: charTwoId,
                 winner: winnerId,
+                stage: stage.trim(),
                 story: story.trim(),
             });
             const savedBattle = yield battle.save();
