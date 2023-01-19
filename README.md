@@ -67,3 +67,6 @@ This project is hosted on [vercel](https://vercel.com/)
 -   Allow Players Swap and trade their Characters 
 -   Battle Leader board from top to lowest ranked winners
 -   Implement Image Generation to Visualize the Battle Simulations.
+
+## More Info
+- Please click here [Battle Star 21](https://github.com/officialyenum/battlestar21.git) to access the React Frontend app Repository
