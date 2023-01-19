@@ -30,6 +30,7 @@ class BattleController {
             const queryPage = +query.page;
             const queryCount = +query.count;
             return Battle_1.default.find()
+                .sort({ "createdAt": "desc" })
                 .skip((queryPage - 1) * queryCount)
                 .limit(queryCount)
                 .lean()
