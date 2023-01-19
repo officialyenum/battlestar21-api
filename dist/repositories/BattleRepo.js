@@ -70,7 +70,7 @@ class BattleRepo {
                 characterOne: charOneId,
                 characterTwo: charTwoId,
                 winner: winnerId,
-                story,
+                story: story.trim(),
             });
             const savedBattle = yield battle.save();
             return savedBattle;

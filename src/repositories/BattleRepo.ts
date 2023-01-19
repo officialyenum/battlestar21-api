@@ -58,7 +58,7 @@ class BattleRepo {
             characterOne: charOneId,
             characterTwo: charTwoId,
             winner: winnerId,
-            story,
+            story:  story.trim(),
         });
         const savedBattle = await battle.save();
         return savedBattle;
