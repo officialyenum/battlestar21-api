@@ -150,12 +150,12 @@ class CharacterRepo {
     }
     updateCharacterLoss(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield Character_1.default.findByIdAndUpdate(id, { loss: { $inc: 1 } });
+            yield Character_1.default.findOneAndUpdate({ _id: id }, { $inc: { 'loss': 1 } }, { new: true });
         });
     }
     updateCharacterWin(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield Character_1.default.findByIdAndUpdate(id, { wins: { $inc: 1 } });
+            yield Character_1.default.findOneAndUpdate({ _id: id }, { $inc: { 'wins': 1 } }, { new: true });
         });
     }
 }

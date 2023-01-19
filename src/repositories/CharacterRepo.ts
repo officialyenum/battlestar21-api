@@ -134,11 +134,11 @@ class CharacterRepo {
     }
 
     async updateCharacterLoss(id:string){
-        await Character.findByIdAndUpdate(id, { loss: { $inc: 1 } });
+        await Character.findOneAndUpdate({_id: id}, { $inc: {'loss': 1 } },{new:true});
     }
 
     async updateCharacterWin(id:string){
-        await Character.findByIdAndUpdate(id, { wins: { $inc: 1 } });
+        await Character.findOneAndUpdate({_id: id}, { $inc: { 'wins' : 1 } },{new:true});
     }
 }
 

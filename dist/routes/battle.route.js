@@ -9,7 +9,7 @@ const router = (0, express_1.Router)();
 const controller = new battle_controller_1.default();
 // Character routes
 router.get('/', controller.index);
-router.get('/simulate', controller.generateBattle);
+router.post('/simulate', controller.generateBattle);
 router.get('/:id', controller.show);
 router.delete('/:id', controller.delete);
 exports.default = router;

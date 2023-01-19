@@ -33,6 +33,9 @@ class BattleController {
                 .skip((queryPage - 1) * queryCount)
                 .limit(queryCount)
                 .lean()
+                .populate("characterOne")
+                .populate("characterTwo")
+                .populate("winner")
                 .then((battles) => {
                 res.status(200).json({
                     data: battles,
@@ -49,7 +52,9 @@ class BattleController {
         this.show = (req, res, next) => {
             const battleId = req.params.id;
             return Battle_1.default.findById(battleId)
-                .select('-__v')
+                .populate("characterOne")
+                .populate("characterTwo")
+                .populate("winner")
                 .then((battle) => (battle ? res.status(200).json({ data: battle }) : res.status(404).json({ message: 'Battle not found' })))
                 .catch((err) => res.status(500).json({ err }));
         };
@@ -86,10 +91,12 @@ class BattleController {
             // Update Characters win and Loss
             yield this.characterRepo.updateCharacterLoss(loserModel._id);
             yield this.characterRepo.updateCharacterWin(winnerModel._id);
-            return res.status(200).json({
-                status: true,
-                data
-            });
+            return Battle_1.default.findById(data._id)
+                .populate("characterOne")
+                .populate("characterTwo")
+                .populate("winner")
+                .then((battle) => (battle ? res.status(200).json({ data: battle }) : res.status(404).json({ message: 'Battle not found' })))
+                .catch((err) => res.status(500).json({ err }));
         });
         this.repo = new BattleRepo_1.default();
         this.characterRepo = new CharacterRepo_1.default();
