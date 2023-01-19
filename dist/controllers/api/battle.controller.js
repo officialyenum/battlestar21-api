@@ -66,6 +66,12 @@ class BattleController {
         };
         this.generateBattle = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { characterOneId, characterTwoId } = req.body;
+            if (characterOneId === characterOneId) {
+                return res.status(422).json({
+                    status: false,
+                    message: "Characters cannot Battle themselves"
+                });
+            }
             const playerOne = yield this.characterRepo.getCharacterById(characterOneId);
             const playerTwo = yield this.characterRepo.getCharacterById(characterTwoId);
             // Get RNG to Pick winner
