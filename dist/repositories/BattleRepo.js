@@ -30,50 +30,6 @@ class BattleRepo {
                 "topP": 1,
                 "countPenalty": {
                     "scale": 0,
-                    "applyToNumbers": False,
-                    "applyToPunctuations": False,
-                    "applyToStopwords": False,
-                    "applyToWhitespaces": False,
-                    "applyToEmojis": False
-                },
-                "frequencyPenalty": {
-                    "scale": 0,
-                    "applyToNumbers": False,
-                    "applyToPunctuations": False,
-                    "applyToStopwords": False,
-                    "applyToWhitespaces": False,
-                    "applyToEmojis": False
-                },
-                "presencePenalty": {
-                    "scale": 0,
-                    "applyToNumbers": False,
-                    "applyToPunctuations": False,
-                    "applyToStopwords": False,
-                    "applyToWhitespaces": False,
-                    "applyToEmojis": False
-                },
-                "stopSequences": ["##"]
-            };
-            const res = yield axios_1.default.post('https://api.ai21.com/studio/v1/experimental/j1-grande-instruct/complete', aiPrompt, {
-                headers: {
-                    "Authorization": `Bearer ${process.env.AI_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-            });
-            return res.data.completions[0].data.text;
-        });
-    }
-    generateBattleStage() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const aiPrompt = {
-                "prompt": "Generate a Gaming Location For Battle.\nName: New york Subway Underground\n##\nGenerate a Gaming Location For Battle.\nName: Men Bathroom\n##\nGenerate a Gaming Location For Battle.\nName: Shopping Mall \n##\nGenerate a Gaming Location For Battle.\nName: Under Bridge, Oshodi Lagos\n##\nGenerate a Gaming Location For Battle.\nName: Frozen Lake, Alaska\n##\nGenerate a Gaming Location For Battle.\nName:",
-                "numResults": 1,
-                "maxTokens": 200,
-                "temperature": 0.7,
-                "topKReturn": 0,
-                "topP": 1,
-                "countPenalty": {
-                    "scale": 0,
                     "applyToNumbers": false,
                     "applyToPunctuations": false,
                     "applyToStopwords": false,
@@ -119,6 +75,50 @@ class BattleRepo {
             });
             const savedBattle = yield battle.save();
             return savedBattle;
+        });
+    }
+    generateBattleStage() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const aiPrompt = {
+                "prompt": "Generate a Gaming Location For Battle.\nName: New york Subway Underground\n##\nGenerate a Gaming Location For Battle.\nName: Men Bathroom\n##\nGenerate a Gaming Location For Battle.\nName: Shopping Mall \n##\nGenerate a Gaming Location For Battle.\nName: Under Bridge, Oshodi Lagos\n##\nGenerate a Gaming Location For Battle.\nName: Frozen Lake, Alaska\n##\nGenerate a Gaming Location For Battle.\nName:",
+                "numResults": 1,
+                "maxTokens": 200,
+                "temperature": 0.7,
+                "topKReturn": 0,
+                "topP": 1,
+                "countPenalty": {
+                    "scale": 0,
+                    "applyToNumbers": false,
+                    "applyToPunctuations": false,
+                    "applyToStopwords": false,
+                    "applyToWhitespaces": false,
+                    "applyToEmojis": false
+                },
+                "frequencyPenalty": {
+                    "scale": 0,
+                    "applyToNumbers": false,
+                    "applyToPunctuations": false,
+                    "applyToStopwords": false,
+                    "applyToWhitespaces": false,
+                    "applyToEmojis": false
+                },
+                "presencePenalty": {
+                    "scale": 0,
+                    "applyToNumbers": false,
+                    "applyToPunctuations": false,
+                    "applyToStopwords": false,
+                    "applyToWhitespaces": false,
+                    "applyToEmojis": false
+                },
+                "stopSequences": ["##"]
+            };
+            const res = yield axios_1.default.post('https://api.ai21.com/studio/v1/experimental/j1-grande-instruct/complete', aiPrompt, {
+                headers: {
+                    "Authorization": `Bearer ${process.env.AI_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+            });
+            return res.data.completions[0].data.text;
         });
     }
     getBattleCount() {
