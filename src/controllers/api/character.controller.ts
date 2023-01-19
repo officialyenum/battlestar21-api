@@ -25,7 +25,7 @@ class CharacterController {
         const queryCount: number = +query.count;
 
         return Character.find()
-            .sort({"wins": "desc"})
+            .sort({"wins": "desc","loss":"asc"})
             .skip((queryPage - 1)* queryCount)
             .limit(queryCount)
             .lean()
