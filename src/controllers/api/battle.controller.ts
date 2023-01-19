@@ -77,9 +77,6 @@ class BattleController {
         const playerTwo = await this.characterRepo.getCharacterById(characterTwoId);
         // Get RNG to Pick winner
         const randomNum = Math.round(Math.random() * 1);
-        console.log(randomNum);
-        const winner = randomNum === 1 ? "Fighter Two" : "Fighter One";
-        console.log(winner);
         // Generate Battle Stage
         const stage = await this.repo.generateBattleStage();
         // Confirm if Both players Exists
@@ -94,7 +91,7 @@ class BattleController {
         // Get Loser
         const loserModel = randomNum !== 1 ? playerTwo : playerOne;
         // Get Story By Generating Battle
-        const story = await this.repo.generateBattle(playerOne.bio, playerTwo.bio, winner, stage);
+        const story = await this.repo.generateBattle(winnerModel.bio, loserModel.bio, stage);
         // Save Battle Record;
         const data = await this.repo.saveBattle(playerOne._id, playerTwo._id, winnerModel._id, stage, story);
         // Update Characters win and Loss
