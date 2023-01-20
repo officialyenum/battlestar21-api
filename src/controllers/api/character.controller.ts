@@ -84,28 +84,26 @@ class CharacterController {
         const { character_id } = req.params;
         console.log(character_id);
         // Get the count of all users
-        // let userIsSame:boolean = true;
-        // const randomUser:any = null;
-        // let count = 0;
+        let userIsSame:boolean = true;
+        let randomUser:any = null;
+        let count = 0;
         try {
-            // const characterCount = await this.repo.getCharacterCount();
-            // const random = Math.floor(Math.random() * characterCount);
-            // do {
-            //     // Breaker condition to prevent infinite loop
-            //     if(count > 3){
-            //         throw new Error("Error occured generating random character");
-            //     }else{
-            //         count++;
-            //     }
-            //     randomUser = await this.repo.getRandomCharacter(random);
-            //     // Make Both ID String
-            //     const randomUserId = JSON.stringify(randomUser._id);
-            //     if (character_id !== randomUserId) {
-            //         userIsSame = false;
-            //     }
-            // } while (userIsSame);
-
-            const randomUser = await this.repo.getRandomCharacterExcept(character_id);
+            const characterCount = await this.repo.getCharacterCount();
+            const random = Math.round(Math.random() * characterCount);
+            do {
+                // Breaker condition to prevent infinite loop
+                if(count > 3){
+                    throw new Error("Error occured generating random character");
+                }else{
+                    count++;
+                }
+                randomUser = await this.repo.getRandomCharacter(random);
+                // Make Both ID String
+                const randomUserId = JSON.stringify(randomUser._id);
+                if (character_id !== randomUserId) {
+                    userIsSame = false;
+                }
+            } while (userIsSame);
 
             return res.status(200).json({
                 status:true,

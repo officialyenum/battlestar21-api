@@ -126,15 +126,6 @@ class CharacterRepo {
             return randomUser;
         });
     }
-    getRandomCharacterExcept(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const randomUser = yield Character_1.default.aggregate([
-                { "$match": { "_id": { "$ne": id } } },
-                { "$sample": { "size": 1 } }
-            ]);
-            return randomUser;
-        });
-    }
     getCharacters(queryPage, queryCount) {
         return __awaiter(this, void 0, void 0, function* () {
             const characters = yield Character_1.default.find().sort({ "wins": "desc", "loss": "desc" })

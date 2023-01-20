@@ -114,14 +114,6 @@ class CharacterRepo {
         return randomUser;
     }
 
-    async getRandomCharacterExcept(id:string) {
-        const randomUser = await Character.aggregate([
-            { "$match": { "_id": { "$ne": id } } },
-            { "$sample": { "size": 1 } }
-        ])
-        return randomUser;
-    }
-
     async getCharacters(queryPage:number, queryCount:number) {
         const characters = await Character.find().sort({"wins": "desc","loss":"desc"})
                                 .skip((queryPage - 1)* queryCount)
