@@ -89,10 +89,11 @@ class CharacterController {
         let count = 0;
         try {
             const characterCount = await this.repo.getCharacterCount();
-            const random = Math.round(Math.random() * characterCount);
+            const random = Math.floor(Math.random() * characterCount);
+            console.log(random);
             do {
                 // Breaker condition to prevent infinite loop
-                if(count > 3){
+                if(count > 5){
                     throw new Error("Error occured generating random character");
                 }else{
                     count++;
@@ -100,13 +101,19 @@ class CharacterController {
                 randomUser = await this.repo.getRandomCharacter(random);
                 // Make Both ID String
                 const randomUserId = JSON.stringify(randomUser._id);
-                if (character_id !== randomUserId) {
+                const characterId = JSON.stringify(character_id);
+                console.log(randomUserId);
+                console.log(characterId);
+                if (characterId !== randomUserId) {
                     userIsSame = false;
                 }
             } while (userIsSame);
 
             return res.status(200).json({
                 status:true,
+                character_id,
+                randomUser,
+                extra: userIsSame,
                 data: randomUser
             });
         } catch (error:any) {
