@@ -116,6 +116,21 @@ class BattleRepo {
         return count;
     }
 
+    async getBattles(queryPage:number, queryCount:number) {
+        return await Battle.find()
+            .sort({"createdAt": "desc"})
+            .skip((queryPage - 1)* queryCount)
+            .limit(queryCount)
+            .lean()
+            .populate("characterOne")
+            .populate("characterTwo")
+            .populate("winner");
+    }
+
+    async deleteBattleById(id:string){
+        await Battle.findByIdAndDelete(id);
+    }
+
     async getCharacterById(id:string){
         const char = await Character.findById(id)
         return char;

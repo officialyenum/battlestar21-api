@@ -22,23 +22,19 @@ class BattleController {
         this.index = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             let totalItems;
             const { page, count } = req.query;
+            // EXTRACT QUERY
             const query = {
                 page: page || 1,
                 count: count || 10
             };
-            totalItems = yield this.repo.getBattleCount();
-            const queryPage = +query.page;
-            const queryCount = +query.count;
-            return Battle_1.default.find()
-                .sort({ "createdAt": "desc" })
-                .skip((queryPage - 1) * queryCount)
-                .limit(queryCount)
-                .lean()
-                .populate("characterOne")
-                .populate("characterTwo")
-                .populate("winner")
-                .then((battles) => {
-                res.status(200).json({
+            try {
+                // GET TOTAL BATTLE
+                totalItems = yield this.repo.getBattleCount();
+                const queryPage = +query.page;
+                const queryCount = +query.count;
+                // GET PAGINATED BATTLES
+                const battles = yield this.repo.getBattles(queryPage, queryCount);
+                return res.status(200).json({
                     data: battles,
                     currentPage: queryPage,
                     hasNextPage: queryCount * queryPage < totalItems,
@@ -47,8 +43,13 @@ class BattleController {
                     previousPage: queryPage - 1,
                     lastPage: Math.ceil(totalItems / queryCount)
                 });
-            })
-                .catch((err) => res.status(500).json({ err }));
+            }
+            catch (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
         });
         this.show = (req, res, next) => {
             const battleId = req.params.id;
@@ -59,12 +60,13 @@ class BattleController {
                 .then((battle) => (battle ? res.status(200).json({ data: battle }) : res.status(404).json({ message: 'Battle not found' })))
                 .catch((err) => res.status(500).json({ err }));
         };
-        this.delete = (req, res, next) => {
-            const battleId = req.params.id;
-            return Battle_1.default.findByIdAndDelete(battleId)
-                .then((battle) => (battle ? res.status(201).json({ message: 'deleted' }) : res.status(404).json({ message: 'Battle not found' })))
-                .catch((err) => res.status(500).json({ err }));
-        };
+        this.delete = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const battles = yield this.repo.getBattles(1, 5);
+            battles.forEach((battle) => __awaiter(this, void 0, void 0, function* () {
+                yield this.repo.deleteBattleById(battle._id);
+            }));
+            return res.status(201).json({ message: 'deleted' });
+        });
         this.generateBattle = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { characterOneId, characterTwoId } = req.body;
             if (characterOneId === characterTwoId) {

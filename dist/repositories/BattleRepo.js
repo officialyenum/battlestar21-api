@@ -127,6 +127,23 @@ class BattleRepo {
             return count;
         });
     }
+    getBattles(queryPage, queryCount) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Battle_1.default.find()
+                .sort({ "createdAt": "desc" })
+                .skip((queryPage - 1) * queryCount)
+                .limit(queryCount)
+                .lean()
+                .populate("characterOne")
+                .populate("characterTwo")
+                .populate("winner");
+        });
+    }
+    deleteBattleById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Battle_1.default.findByIdAndDelete(id);
+        });
+    }
     getCharacterById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const char = yield Character_1.default.findById(id);

@@ -126,6 +126,15 @@ class CharacterRepo {
             return randomUser;
         });
     }
+    getCharacters(queryPage, queryCount) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const characters = yield Character_1.default.find().sort({ "wins": "desc", "loss": "desc" })
+                .skip((queryPage - 1) * queryCount)
+                .limit(queryCount)
+                .lean();
+            return characters;
+        });
+    }
     getCharacterCount() {
         return __awaiter(this, void 0, void 0, function* () {
             const count = yield Character_1.default.find({}).count();
@@ -146,6 +155,11 @@ class CharacterRepo {
         return __awaiter(this, void 0, void 0, function* () {
             const char = yield Character_1.default.findById(id);
             return char;
+        });
+    }
+    deleteCharacterById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Character_1.default.findByIdAndDelete(id);
         });
     }
     updateCharacterLoss(id) {

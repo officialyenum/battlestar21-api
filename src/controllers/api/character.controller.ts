@@ -14,32 +14,37 @@ class CharacterController {
 
     index = async (req: Request, res: Response, next: NextFunction) => {
         let totalItems:number;
+        // EXTRACT QUERY
         const { page, count } = req.query;
         const query:any ={
             page : page || 1,
             count: count || 10
         };
+        try {
+            // GET TOTAL CHARACTERS
+            totalItems = await Character.find({}).count();
+            const queryPage: number = +query.page;
+            const queryCount: number = +query.count;
 
-        totalItems = await Character.find({}).count();
-        const queryPage: number = +query.page;
-        const queryCount: number = +query.count;
+            // GET PAGINATED CHARACTERS
+            const  characters = await this.repo.getCharacters(queryPage, queryCount)
+            return res.status(200).json({
+                data: characters,
+                currentPage: queryPage,
+                hasNextPage: queryCount * queryPage < totalItems,
+                hasPreviousPage: queryPage > 1,
+                nextPage: queryPage + 1,
+                previousPage: queryPage - 1,
+                lastPage: Math.ceil(totalItems/ queryCount) });
 
-        return Character.find()
-            .sort({"wins": "desc","loss":"desc"})
-            .skip((queryPage - 1)* queryCount)
-            .limit(queryCount)
-            .lean()
-            .then((characters) => {
-                res.status(200).json({
-                    data: characters,
-                    currentPage: queryPage,
-                    hasNextPage: queryCount * queryPage < totalItems,
-                    hasPreviousPage: queryPage > 1,
-                    nextPage: queryPage + 1,
-                    previousPage: queryPage - 1,
-                    lastPage: Math.ceil(totalItems/ queryCount) })
+        } catch (error:any) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
             })
-            .catch((err) => res.status(500).json({ err }));
+        }
+
+
     };
 
     show = (req: Request, res: Response, next: NextFunction) => {

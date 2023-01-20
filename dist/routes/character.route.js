@@ -12,7 +12,7 @@ const controller = new character_controller_1.default();
 router.get('/', controller.index);
 router.get('/generate', controller.generateName);
 router.get('/:id', controller.show);
-// router.delete('/:id', controller.delete);
+router.delete('/:id', controller.delete);
 router.get('/random/:character_id', controller.getRandom);
 exports.default = router;
 //# sourceMappingURL=character.route.js.map

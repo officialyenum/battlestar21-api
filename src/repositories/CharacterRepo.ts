@@ -114,6 +114,14 @@ class CharacterRepo {
         return randomUser;
     }
 
+    async getCharacters(queryPage:number, queryCount:number) {
+        const characters = await Character.find().sort({"wins": "desc","loss":"desc"})
+                                .skip((queryPage - 1)* queryCount)
+                                .limit(queryCount)
+                                .lean();
+        return characters;
+    }
+
     async getCharacterCount() {
         const count = await Character.find({}).count();
         return count;
@@ -131,6 +139,10 @@ class CharacterRepo {
     async getCharacterById(id:string){
         const char =await Character.findById(id)
         return char;
+    }
+
+    async deleteCharacterById(id:string){
+        await Character.findByIdAndDelete(id);
     }
 
     async updateCharacterLoss(id:string){

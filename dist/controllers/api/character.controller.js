@@ -20,21 +20,20 @@ class CharacterController {
     constructor() {
         this.index = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             let totalItems;
+            // EXTRACT QUERY
             const { page, count } = req.query;
             const query = {
                 page: page || 1,
                 count: count || 10
             };
-            totalItems = yield Character_1.default.find({}).count();
-            const queryPage = +query.page;
-            const queryCount = +query.count;
-            return Character_1.default.find()
-                .sort({ "wins": "desc", "loss": "desc" })
-                .skip((queryPage - 1) * queryCount)
-                .limit(queryCount)
-                .lean()
-                .then((characters) => {
-                res.status(200).json({
+            try {
+                // GET TOTAL CHARACTERS
+                totalItems = yield Character_1.default.find({}).count();
+                const queryPage = +query.page;
+                const queryCount = +query.count;
+                // GET PAGINATED CHARACTERS
+                const characters = yield this.repo.getCharacters(queryPage, queryCount);
+                return res.status(200).json({
                     data: characters,
                     currentPage: queryPage,
                     hasNextPage: queryCount * queryPage < totalItems,
@@ -43,8 +42,13 @@ class CharacterController {
                     previousPage: queryPage - 1,
                     lastPage: Math.ceil(totalItems / queryCount)
                 });
-            })
-                .catch((err) => res.status(500).json({ err }));
+            }
+            catch (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: error.message
+                });
+            }
         });
         this.show = (req, res, next) => {
             const characterId = req.params.id;

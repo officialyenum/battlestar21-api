@@ -18,34 +18,35 @@ class BattleController {
     index = async (req: Request, res: Response, next: NextFunction) => {
         let totalItems:number;
         const { page, count } = req.query;
+
+        // EXTRACT QUERY
         const query:any ={
             page : page || 1,
             count: count || 10
         };
+        try {
+            // GET TOTAL BATTLE
+            totalItems = await this.repo.getBattleCount();
+            const queryPage: number = +query.page;
+            const queryCount: number = +query.count;
 
-        totalItems = await this.repo.getBattleCount();
-        const queryPage: number = +query.page;
-        const queryCount: number = +query.count;
+            // GET PAGINATED BATTLES
+            const battles = await this.repo.getBattles(queryPage,queryCount);
 
-        return Battle.find()
-            .sort({"createdAt": "desc"})
-            .skip((queryPage - 1)* queryCount)
-            .limit(queryCount)
-            .lean()
-            .populate("characterOne")
-            .populate("characterTwo")
-            .populate("winner")
-            .then((battles) => {
-                res.status(200).json({
-                    data: battles,
-                    currentPage: queryPage,
-                    hasNextPage: queryCount * queryPage < totalItems,
-                    hasPreviousPage: queryPage > 1,
-                    nextPage: queryPage + 1,
-                    previousPage: queryPage - 1,
-                    lastPage: Math.ceil(totalItems/ queryCount) })
+            return res.status(200).json({
+                data: battles,
+                currentPage: queryPage,
+                hasNextPage: queryCount * queryPage < totalItems,
+                hasPreviousPage: queryPage > 1,
+                nextPage: queryPage + 1,
+                previousPage: queryPage - 1,
+                lastPage: Math.ceil(totalItems/ queryCount) })
+        } catch (error:any) {
+            return res.status(500).json({
+                success: false,
+                message: error.message
             })
-            .catch((err) => res.status(500).json({ err }));
+        }
     };
 
 
@@ -59,11 +60,12 @@ class BattleController {
             .catch((err) => res.status(500).json({ err }));
     };
 
-    delete = (req: Request, res: Response, next: NextFunction) => {
-        const battleId = req.params.id;
-        return Battle.findByIdAndDelete(battleId)
-            .then((battle) => (battle ? res.status(201).json({ message: 'deleted' }) : res.status(404).json({ message: 'Battle not found' })))
-            .catch((err) => res.status(500).json({ err }));
+    delete = async (req: Request, res: Response, next: NextFunction) => {
+        const battles = await this.repo.getBattles(1,5);
+        battles.forEach(async (battle:any) => {
+            await this.repo.deleteBattleById(battle._id);
+        });
+        return res.status(201).json({ message: 'deleted' })
     };
 
     generateBattle = async (req: Request, res: Response, next: NextFunction) => {

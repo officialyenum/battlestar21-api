@@ -11,7 +11,7 @@ const controller = new CharacterController();
 router.get('/', controller.index);
 router.get('/generate', controller.generateName);
 router.get('/:id', controller.show);
-// router.delete('/:id', controller.delete);
+router.delete('/:id', controller.delete);
 router.get('/random/:character_id', controller.getRandom);
 
 export default router;

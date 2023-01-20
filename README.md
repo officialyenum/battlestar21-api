@@ -86,5 +86,5 @@ This project is hosted on [vercel](https://vercel.com/)
 -   Battle Leader board from top winners to lowest winners
 -   Implement Image Generation to Visualize the Battle Simulations.
 
-## More Info
-- Please click here [Battle Star 21](https://github.com/officialyenum/battlestar21.git) to access the React Frontend app Repository
+## FRONTEND REACT APP REPO HERE
+- Please click here [Battle Star 21 UI](https://github.com/officialyenum/battlestar21.git) to access the React Frontend app Repository
