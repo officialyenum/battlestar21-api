@@ -85,12 +85,38 @@ class CharacterController {
             const { character_id } = req.params;
             console.log(character_id);
             // Get the count of all users
-            const characterCount = yield this.repo.getCharacterCount();
-            const random = Math.floor(Math.random() * characterCount);
-            const randomUser = yield this.repo.getRandomCharacter(random);
-            return res.status(200).json({
-                data: randomUser
-            });
+            // let userIsSame:boolean = true;
+            // const randomUser:any = null;
+            // let count = 0;
+            try {
+                // const characterCount = await this.repo.getCharacterCount();
+                // const random = Math.floor(Math.random() * characterCount);
+                // do {
+                //     // Breaker condition to prevent infinite loop
+                //     if(count > 3){
+                //         throw new Error("Error occured generating random character");
+                //     }else{
+                //         count++;
+                //     }
+                //     randomUser = await this.repo.getRandomCharacter(random);
+                //     // Make Both ID String
+                //     const randomUserId = JSON.stringify(randomUser._id);
+                //     if (character_id !== randomUserId) {
+                //         userIsSame = false;
+                //     }
+                // } while (userIsSame);
+                const randomUser = yield this.repo.getRandomCharacterExcept(character_id);
+                return res.status(200).json({
+                    status: true,
+                    data: randomUser
+                });
+            }
+            catch (error) {
+                return res.status(500).json({
+                    status: false,
+                    message: error.message
+                });
+            }
         });
         this.generateName = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const data = yield this.repo.generateCharacter();

@@ -75,6 +75,7 @@ This project is hosted on [vercel](https://vercel.com/)
 ### Limitations
 -   Authentication is not implemented
 -   Rewards not Implemented
+-   Battle Generation Model still doesn't finish some stories, this happens 1 in 20 tries
 
 ### Next Steps
 -   Authentication will be implemented so players can have 1-5 characters dey can battle with

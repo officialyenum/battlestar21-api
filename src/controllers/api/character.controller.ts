@@ -84,12 +84,40 @@ class CharacterController {
         const { character_id } = req.params;
         console.log(character_id);
         // Get the count of all users
-        const characterCount = await this.repo.getCharacterCount();
-        const random = Math.floor(Math.random() * characterCount);
-        const randomUser = await this.repo.getRandomCharacter(random);
-        return res.status(200).json({
-            data: randomUser
-        });
+        // let userIsSame:boolean = true;
+        // const randomUser:any = null;
+        // let count = 0;
+        try {
+            // const characterCount = await this.repo.getCharacterCount();
+            // const random = Math.floor(Math.random() * characterCount);
+            // do {
+            //     // Breaker condition to prevent infinite loop
+            //     if(count > 3){
+            //         throw new Error("Error occured generating random character");
+            //     }else{
+            //         count++;
+            //     }
+            //     randomUser = await this.repo.getRandomCharacter(random);
+            //     // Make Both ID String
+            //     const randomUserId = JSON.stringify(randomUser._id);
+            //     if (character_id !== randomUserId) {
+            //         userIsSame = false;
+            //     }
+            // } while (userIsSame);
+
+            const randomUser = await this.repo.getRandomCharacterExcept(character_id);
+
+            return res.status(200).json({
+                status:true,
+                data: randomUser
+            });
+        } catch (error:any) {
+            return res.status(500).json({
+                status: false,
+                message: error.message
+            });
+        }
+
     }
 
     generateName = async (req: Request, res: Response, next: NextFunction) => {
