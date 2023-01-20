@@ -46,6 +46,18 @@ Encompasses three generate endpoints contained in the Node Server and broken dow
 -   Get Results after simulations
     After the battle simulation, the user is awarded with a '+battle star token' or '-eth' - this originates from the 'proof of stake' and 'proof of work' blockchain-based concepts that would be implemented in our next build. However, in this build, the user is awarded with a point if their prediction goes right or no point if it goes wrong. Additionally, the character who wins the fight gets a '+1 win' and the loser, a '+1 loss'. 
 
+
+## AI21 Models Used
+
+- Please click here [BS_GENERATE_NAME](https://studio.ai21.com/playground/complete?promptShare=efc3ba0d-fee4-41e1-8d45-0a162fa2b665) to access the BS_GENERATE_NAME Model oon AI21 Playground
+
+- Please click here [BS_GENERATE_BIO](https://studio.ai21.com/playground/complete?promptShare=ab7bf249-1845-4e11-a5f5-b3340fd4ac0f) to access the BS_GENERATE_BIO Model oon AI21 Playground
+
+- Please click here [BS_GENERATE_STAGE](https://studio.ai21.com/playground/complete?promptShare=32bddf70-1217-402b-b600-c45196d575be) to access the BS_GENERATE_STAGE Model oon AI21 Playground
+
+- Please click here [BS_GENERATE_BATTLE](https://studio.ai21.com/playground/complete?promptShare=db156f9b-0369-46a6-acbe-addd51cbd276) to access the BS_GENERATE_BATTLE Model oon AI21 Playground
+
+
 ### Testing
 -   No Test Implemented
 
@@ -62,11 +74,11 @@ This project is hosted on [vercel](https://vercel.com/)
 
 ### Limitations
 -   Authentication is not implemented
--   Testing is not implemented
+-   Rewards not Implemented
 
 ### Next Steps
 -   Authentication will be implemented so players can have 1-5 characters dey can battle with
--   Probably Earn Points for every battle won (the battle star token)
+-   Probably Earn Points for every battle won (The battle star token)
 -   Make it Multiplayer & Enable Different Kinds of Battle simulations asides 1v1 
 -   Upgrade Character Power up with points 
 -   Player Battle History
