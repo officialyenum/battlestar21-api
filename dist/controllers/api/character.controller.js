@@ -74,12 +74,13 @@ class CharacterController {
             })
                 .catch((err) => res.status(500).json({ err }));
         };
-        this.delete = (req, res, next) => {
-            const characterId = req.params.id;
-            return Character_1.default.findByIdAndDelete(characterId)
-                .then((character) => (character ? res.status(201).json({ message: 'deleted' }) : res.status(404).json({ message: 'Character not found' })))
-                .catch((err) => res.status(500).json({ err }));
-        };
+        this.delete = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const characters = yield this.repo.getCharacters(1, 5);
+            characters.forEach((character) => __awaiter(this, void 0, void 0, function* () {
+                yield this.repo.deleteCharacterById(character._id);
+            }));
+            return res.status(201).json({ message: 'deleted' });
+        });
         this.getRandom = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { character_id } = req.params;
             console.log(character_id);
