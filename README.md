@@ -1,6 +1,6 @@
 
 # Battle Star 21 API
-This is the Api that powers Battle Star Game using AI21 language model for  AI21 Labs Hackathon taking place on January 13-20 2023
+This is the Api that powers Battle Star Game using AI21 language model for  AI21 Labs Hackathon which took place on the 13th-20th of January 2023
 
 
 ## Table of Contents
