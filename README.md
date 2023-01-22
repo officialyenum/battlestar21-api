@@ -13,6 +13,10 @@ This is the Api that powers Battle Star Game using AI21 language model for  AI21
     -   [Documentation](#documentation)
     -   [Deployment](#deployment)
     -   [Limitations](#limitations)
+-   [More Info](#more-info)
+-   [Contribute](#contribute)
+-   [Support](#support)
+-   [License](#license)
 
 ## Technologies
 -   [Node JS](https://nodejs.org/) - Node.js® is an open-source, cross-platform JavaScript runtime environment.
