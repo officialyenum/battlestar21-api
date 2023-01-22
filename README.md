@@ -9,16 +9,18 @@ This is the Api that powers Battle Star Game using AI21 language model for  AI21
 -   [Getting Started](#getting-started)
     -   [Installation](#installation)
     -   [Usage](#usage)
+    -   [AI21 Models Used](#ai21-models-used)
     -   [Testing](#testing)
     -   [Documentation](#documentation)
     -   [Deployment](#deployment)
     -   [Limitations](#limitations)
--   [More Info](#more-info)
+-   [Frontend React App Repo Info](#frontend-react-app-repo-info)
 -   [Contribute](#contribute)
 -   [Support](#support)
 -   [License](#license)
 
 ## Technologies
+
 -   [Node JS](https://nodejs.org/) - Node.js® is an open-source, cross-platform JavaScript runtime environment.
 -   [Express JS](https://expressjs.com/) - Runtime Environment
 -   [Mongo DB](https://www.mongodb.com/) - The developer data platform for any workload.
@@ -51,7 +53,7 @@ Encompasses three generate endpoints contained in the Node Server and broken dow
     After the battle simulation, the user is awarded with a '+battle star token' or '-eth' - this originates from the 'proof of stake' and 'proof of work' blockchain-based concepts that would be implemented in our next build. However, in this build, the user is awarded with a point if their prediction goes right or no point if it goes wrong. Additionally, the character who wins the fight gets a '+1 win' and the loser, a '+1 loss'. 
 
 
-## AI21 Models Used
+### AI21 Models Used
 
 - Please click here [BS_GENERATE_NAME](https://studio.ai21.com/playground/complete?promptShare=efc3ba0d-fee4-41e1-8d45-0a162fa2b665) to access the BS_GENERATE_NAME Model oon AI21 Playground
 
@@ -91,22 +93,24 @@ This project is hosted on [vercel](https://vercel.com/)
 -   Battle Leader board from top winners to lowest winners
 -   Implement Image Generation to Visualize the Battle Simulations.
 
-## FRONTEND REACT APP REPO HERE
+## Frontend React App Repo Info
+----------
+
 - Please click here [Battle Star 21 UI](https://github.com/officialyenum/battlestar21.git) to access the React Frontend app Repository
 
-Contribute
+## Contribute
 ----------
 
 - Issue Tracker: https://www.github.com/officialyenum/battlestar21-api/issues
 - Source Code: https://www.github.com/officialyenum/battlestar21-api
 
-Support
+## Support
 -------
 
 If you are having issues, please let me know.
 I have a mailing list located at: oponechukwuyenum@gmail.com OR oponechukwuyenum@icloud.com
 
-License
+## License
 -------
 
 The project is licensed under the MIT license.
